@@ -23,8 +23,6 @@ pip install -r requirements.txt
 streamlit run src/frontend/app.py
 ```
 
-Esto es lo único que tus compañeros necesitan para la demostración.
-
 ---
 
 ---

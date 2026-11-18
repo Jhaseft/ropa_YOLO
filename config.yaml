@@ -1,0 +1,23 @@
+# Configuración central del proyecto de detección de defectos en prendas.
+# Todas las rutas son relativas a la raíz del proyecto (ver src/config.py).
+
+# Rutas principales
+rutas:
+  dataset: data/dataset/data.yaml   # archivo data.yaml del dataset descargado
+  modelo: models/best.pt            # pesos del mejor modelo entrenado
+
+# Modelo base de YOLO (transfer learning)
+modelo_base: yolo11n.pt
+
+# Parámetros de entrenamiento
+entrenamiento:
+  epochs: 50
+  imgsz: 640
+  batch: 16
+  patience: 15
+  device: auto      # "auto" -> usa GPU si existe, si no CPU
+
+# Parámetros de inferencia / detección
+inferencia:
+  confianza_minima: 0.25
+  iou: 0.45

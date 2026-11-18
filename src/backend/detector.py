@@ -82,11 +82,11 @@ class DetectorDefectos:
 
 
 if __name__ == "__main__":
-    # Prueba rápida desde consola: python src/detector.py ruta/a/imagen.jpg
+    # Prueba rápida desde consola: python src/backend/detector.py ruta/a/imagen.jpg
     import sys
 
     if len(sys.argv) < 2:
-        print("Uso: python src/detector.py <ruta_imagen>")
+        print("Uso: python src/backend/detector.py <ruta_imagen>")
         raise SystemExit(1)
 
     detector = DetectorDefectos()

@@ -8,9 +8,31 @@ calidad: **APROBADA** o **RECHAZADA**.
 Defectos que detecta (se ajustan según el dataset): **agujero, mancha,
 costura_defectuosa, hilo_suelto**.
 
+## 🚀 Demo rápida (solo usar la app, sin entrenar)
+
+El modelo ya entrenado (`models/best.pt`) **viene incluido en el repo**, así que
+para probar la app solo necesitas el código y las dependencias. **No hace falta
+Roboflow, ni `.env`, ni descargar el dataset, ni entrenar.**
+
+```powershell
+git clone https://github.com/Jhaseft/ropa_YOLO.git
+cd ropa_YOLO
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run src/frontend/app.py
+```
+
+Esto es lo único que tus compañeros necesitan para la demostración.
+
+---
+
 ---
 
 ## Estructura del proyecto
+
+El código está dividido en **backend** (toda la lógica e inteligencia artificial)
+y **frontend** (la interfaz de usuario):
 
 ```
 deteccion-defectos-prendas/
@@ -21,17 +43,24 @@ deteccion-defectos-prendas/
 ├── data/
 │   └── dataset/                # Dataset descargado de Roboflow (ignorado por git)
 ├── models/
-│   └── best.pt                 # Mejor modelo entrenado (ignorado por git)
+│   └── best.pt                 # Modelo entrenado (SÍ se sube: pesa ~5 MB)
 ├── notebooks/
 │   └── entrenamiento_colab.ipynb   # Entrenamiento en Colab con GPU
 └── src/
-    ├── config.py               # Carga config.yaml y .env
-    ├── descargar_dataset.py    # Descarga el dataset de Roboflow
-    ├── entrenar.py             # Entrena el modelo
-    ├── evaluar.py              # Evalúa el modelo sobre test
-    ├── detector.py             # Clase DetectorDefectos (inferencia)
-    └── app.py                  # Aplicación web (Streamlit)
+    ├── backend/                # Lógica e IA
+    │   ├── config.py           # Carga config.yaml y .env
+    │   ├── descargar_dataset.py  # Descarga el dataset de Roboflow
+    │   ├── entrenar.py         # Entrena el modelo
+    │   ├── evaluar.py          # Evalúa el modelo sobre test
+    │   └── detector.py         # Clase DetectorDefectos (inferencia)
+    └── frontend/               # Interfaz de usuario
+        └── app.py              # Aplicación web (Streamlit)
 ```
+
+- **backend**: se encarga de los datos, el entrenamiento, la evaluación y la
+  detección. Es el "cerebro".
+- **frontend**: la app de Streamlit con la que interactúa el usuario. Usa al
+  backend (`detector.py`) para analizar las imágenes.
 
 ---
 
@@ -87,12 +116,14 @@ ROBOFLOW_VERSION=1
 
 ---
 
-## Flujo de uso
+
+
+## Flujo completo (crear el modelo desde cero)
 
 ### 1. Descargar el dataset
 
 ```powershell
-python src/descargar_dataset.py
+python src/backend/descargar_dataset.py
 ```
 
 Descarga el dataset a `data/dataset/`, corrige las rutas de `data.yaml`, crea el
@@ -103,9 +134,9 @@ split `test` si no existe (~10% de train) y muestra un resumen.
 **Opción A — Local (recomendado solo si tienes GPU):**
 
 ```powershell
-python src/entrenar.py
+python src/backend/entrenar.py
 # Sobrescribir parámetros:
-python src/entrenar.py --epochs 100 --batch 8 --imgsz 512
+python src/backend/entrenar.py --epochs 100 --batch 8 --imgsz 512
 ```
 
 **Opción B — Google Colab con GPU (recomendado):**
@@ -120,7 +151,7 @@ El modelo entrenado se guarda en `runs/entrenamiento/exp/` y se copia a
 ### 3. Evaluar
 
 ```powershell
-python src/evaluar.py
+python src/backend/evaluar.py
 ```
 
 Evalúa sobre el split `test` y guarda las métricas (precisión, recall, F1,
@@ -130,7 +161,7 @@ mAP50, mAP50-95; global y por clase) en `runs/evaluacion/exp` y
 ### 4. Ejecutar la aplicación
 
 ```powershell
-streamlit run src/app.py
+streamlit run src/frontend/app.py
 ```
 
 Abre la app en el navegador. Permite **subir una imagen** o usar la **cámara**,

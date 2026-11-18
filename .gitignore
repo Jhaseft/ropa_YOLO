@@ -4,6 +4,9 @@ __pycache__/
 .env
 data/*
 !data/.gitkeep
-models/*.pt
 runs/
+
+# Ignoramos todos los modelos .pt (ej. yolo11n.pt, bestv1.pt)...
 *.pt
+# ...excepto el modelo final, para que la app funcione al clonar el repo.
+!models/best.pt

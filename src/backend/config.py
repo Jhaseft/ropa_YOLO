@@ -13,8 +13,9 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 
-# La raíz del proyecto es la carpeta que contiene a src/ (un nivel arriba de este archivo).
-RAIZ = Path(__file__).resolve().parent.parent
+# La raíz del proyecto. Este archivo está en src/backend/, así que subimos
+# tres niveles: config.py -> backend -> src -> raíz del proyecto.
+RAIZ = Path(__file__).resolve().parent.parent.parent
 
 # Carga las variables del archivo .env que está en la raíz del proyecto.
 load_dotenv(RAIZ / ".env")

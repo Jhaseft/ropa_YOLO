@@ -10,7 +10,7 @@ Pasos que realiza:
 5. Imprime un resumen: clases y cantidad de imágenes por split.
 
 Uso:
-    python src/descargar_dataset.py
+    python src/backend/descargar_dataset.py
 """
 
 import os
@@ -169,7 +169,7 @@ def imprimir_resumen(carpeta, datos):
         print(f"  {split:6s}: {total} imágenes")
 
     print(f"\ndata.yaml listo en: {carpeta / 'data.yaml'}")
-    print("Ya puedes entrenar con: python src/entrenar.py")
+    print("Ya puedes entrenar con: python src/backend/entrenar.py")
 
 
 def main():

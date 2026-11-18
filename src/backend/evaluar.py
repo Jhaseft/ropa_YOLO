@@ -8,7 +8,7 @@ Calcula y guarda en runs/evaluacion/metricas.json:
 También indica dónde quedaron la matriz de confusión y las curvas generadas.
 
 Uso:
-    python src/evaluar.py
+    python src/backend/evaluar.py
 """
 
 import json
@@ -29,7 +29,7 @@ def main():
     # Verifica que el modelo exista.
     if not RUTA_MODELO.exists():
         print(f"ERROR: no se encontró el modelo en {RUTA_MODELO}")
-        print("Primero entrena con: python src/entrenar.py")
+        print("Primero entrena con: python src/backend/entrenar.py")
         raise SystemExit(1)
 
     from ultralytics import YOLO

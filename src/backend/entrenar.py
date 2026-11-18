@@ -7,8 +7,8 @@ Entrena el modelo YOLO para detectar defectos en prendas (transfer learning).
 - Guarda los resultados en runs/entrenamiento y copia best.pt a models/.
 
 Uso:
-    python src/entrenar.py
-    python src/entrenar.py --epochs 100 --batch 8 --imgsz 512
+    python src/backend/entrenar.py
+    python src/backend/entrenar.py --epochs 100 --batch 8 --imgsz 512
 """
 
 import argparse
@@ -56,7 +56,7 @@ def main():
     # Verifica que el dataset exista antes de empezar.
     if not RUTA_DATASET.exists():
         print(f"ERROR: no se encontró el dataset en {RUTA_DATASET}")
-        print("Primero descarga el dataset con: python src/descargar_dataset.py")
+        print("Primero descarga el dataset con: python src/backend/descargar_dataset.py")
         raise SystemExit(1)
 
     # Aviso sobre la GPU.

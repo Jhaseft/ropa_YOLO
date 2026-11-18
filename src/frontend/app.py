@@ -6,14 +6,21 @@ original y la anotada, una tabla de defectos, el conteo por tipo y un veredicto
 de control de calidad (APROBADA / RECHAZADA).
 
 Uso:
-    streamlit run src/app.py
+    streamlit run src/frontend/app.py
 """
 
+import sys
 from collections import Counter
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 from PIL import Image
+
+# El frontend vive en src/frontend/, pero la lógica (detector, config) está en
+# src/backend/. Agregamos esa carpeta al path para poder importarla.
+RUTA_BACKEND = Path(__file__).resolve().parent.parent / "backend"
+sys.path.insert(0, str(RUTA_BACKEND))
 
 from config import CONFIG, RUTA_MODELO
 from detector import DetectorDefectos
@@ -79,8 +86,8 @@ def main():
         st.warning(
             "⚠️ No se encontró el modelo entrenado (models/best.pt).\n\n"
             "Primero hay que entrenar el modelo:\n"
-            "1. `python src/descargar_dataset.py`\n"
-            "2. `python src/entrenar.py` (o usar el notebook de Colab)"
+            "1. `python src/backend/descargar_dataset.py`\n"
+            "2. `python src/backend/entrenar.py` (o usar el notebook de Colab)"
         )
         st.stop()
 
